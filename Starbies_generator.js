@@ -84,7 +84,8 @@ function generateDrink(){
 
 function displayDrink(){
   //use simple variable checking to determine what name to print
-  drinkString = 'Drink Base:<br>'
+  drinkString = 'Size: ' + drink.size + '<br>'
+  drinkString += 'Drink Base:<br>'
   for (const entry of drink.bases.entries()){
     drinkString += entry[0] + ' ' + entry[1] + (entry[1] > 1 ? ' shots' : ' shot') + '<br>'
   }
