@@ -43,7 +43,6 @@ function setup() {
 
 function generateDrink(){
   if(first_seed && document.getElementById("seed").value == ''){
-    console.log('first seed & empty')
     seed = random(1, 10000)
   }
   else{
@@ -56,7 +55,6 @@ function generateDrink(){
       newseed += seed.charCodeAt(i)
     }
     seed = newseed
-    console.log('newseed is:' + newseed)
   }
   first_seed = false
   randomSeed(seed)
@@ -70,7 +68,7 @@ function generateDrink(){
   }
 
 
-  num_syrups = random(1, 3)
+  num_syrups = int(random(0, 3))
   for(let i = 0; i < num_syrups; i++){
     drink.syrups.set(random(syrups), int(random(1,3)))
   }
@@ -79,7 +77,6 @@ function generateDrink(){
 
   drink.ice = random() < 0.5
   drink.sugars = int(random(0, 10))
-  console.log(drink)
   //generates next seed based off current one
   seed = (int(random(1, 10000)))
   displayDrink()
@@ -89,19 +86,20 @@ function displayDrink(){
   //use simple variable checking to determine what name to print
   drinkString = 'Drink Base:<br>'
   for (const entry of drink.bases.entries()){
-    drinkString += entry[0] + ' ' + entry[1] + ' shot(s)' + '<br>'
+    drinkString += entry[0] + ' ' + entry[1] + (entry[1] > 1 ? ' shots' : ' shot') + '<br>'
   }
   drinkString += '<br>Syrups:<br>'
+  if(drink.syrups.size == 0){
+    drinkString += 'None<br>'
+  }
   for (const entry of drink.syrups.entries()){
-    drinkString += entry[0] + ' ' + entry[1] + ' pump(s)' + '<br>'
+    drinkString += entry[0] + ' ' + entry[1] + (entry[1] > 1 ? ' pumps' : ' pump') + '<br>'
   }
   drinkString += '<br>Milk Type: ' + drink.milk_type + '<br>'
   drinkString += '<br>Sugars: ' + drink.sugars + '<br>'
   drinkString += '<br>Ice: ' + (drink.ice ? "Yes" : "No") + '<br>'
 
-  console.log(drinkString)
   document.getElementById('output').innerHTML = drinkString
-  console.log(seed)
   document.getElementById('seed').value = seed
 
   clearDrink()
